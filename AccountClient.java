@@ -92,4 +92,19 @@ public interface AccountFeignClient {
 	 */
 	@GetMapping(value = FeignInsideAuthConfig.FEIGN_INSIDE_URL_PREFIX + "/insider/account/getMerchantInfoByTenantId")
 	ServerResponseEntity<AuthAccountVO> getMerchantInfoByTenantId(@RequestParam("tenantId") Long tenantId);
+
+
+	@FeignClient(value = "mevande-auth",contextId ="token")
+	public interface TokenFeignClient {
+
+	/**
+	 * 校验token并返回token保存的用户信息
+	 * @param accessToken accessToken
+	 * @return token保存的用户信息
+	 */
+	@GetMapping(value = Auth.CHECK_TOKEN_URI)
+	ServerResponseEntity<UserInfoInTokenBO> checkToken(@RequestParam("accessToken") String accessToken);
+
+}
+
 }
